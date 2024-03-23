@@ -25,7 +25,7 @@ connections =  [
     {"Category": "Evil", "Words": ["devious", "wicked", "ungodly", "naughty"]},
     {"Category": "Alpha", "Words": ["leader", "drive", "dominant", "confident"]},
     {"Category": "Beta", "Words": ["weak", "submissive", "lone_wolf", "passive"]},
-    {"Category": "Camera_Brands", "Words": ["FUJIFILM", "HASSELBLAD", "OLYMPUS", "POLAROID"]},
+    {"Category": "Camera_Brands", "Words": ["fujifilm", "hassleblad", "olympus", "polaroid"]},
     {"Category": "Falsify", "Words": ["fabricate", "fake", "fix", "forge"]},
     {"Category": "Nato_Alphabet", "Words": ["Tango", "Alpha", "Papa", "Oscar"]}
 ]
@@ -47,12 +47,19 @@ def fill_word_grid(grid, connections):
             col += 1 #moves to next column
         row += 1  #move into next row
 
-def print_word_grid(grid): #print the word grid
+def print_word_grid(grid):
     '''
-    Print the word grid
+    Print the word grid with outlines
     '''
-    for row in grid:  #Print rows
-        print(row)
+    print("----" * 13 + "-")  # Length of top line
+    for row in grid:
+        print("|", end=" ")  #Printing the outline
+        for cell in row:
+            print(cell.center(10), end=" | ") #Printing the sides
+        print()
+        print("----" * 13 + "-")  # Horizontal line
+
+
 
 # Test the functions
 word_grid = create_word_grid()
