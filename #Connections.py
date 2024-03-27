@@ -20,14 +20,14 @@ def create_word_grid():
 
 # Define connections from dictionary
 connections =  [
-    {"Category": "Cars", "Words": ["Ferrari", "Porsche", "Ford", "Jeep"]},
-    {"Category": "Crazy", "Words": ["mad", "passionate", "nuts", "bananas"]},
-    {"Category": "Evil", "Words": ["devious", "wicked", "ungodly", "naughty"]},
-    {"Category": "Alpha", "Words": ["leader", "drive", "dominant", "confident"]},
-    {"Category": "Beta", "Words": ["weak", "submissive", "lone_wolf", "passive"]},
-    {"Category": "Camera_Brands", "Words": ["fujifilm", "hassleblad", "olympus", "polaroid"]},
-    {"Category": "Falsify", "Words": ["fabricate", "fake", "fix", "forge"]},
-    {"Category": "Nato_Alphabet", "Words": ["Tango", "Alpha", "Papa", "Oscar"]}
+    {"Category": "Cars", "Words": ["Ferrari1", "Porsche1", "Ford1", "Jeep1"]},
+    {"Category": "Crazy", "Words": ["mad2", "passionate2", "nuts2", "bananas2"]},
+    {"Category": "Evil", "Words": ["devious3", "wicked3", "ungodly3", "naughty3"]},
+    {"Category": "Alpha", "Words": ["leader4", "drive4", "dominant4", "confident4"]},
+    {"Category": "Beta", "Words": ["weak5", "submissive5", "lone_wolf5", "passive5"]},
+    {"Category": "Camera_Brands", "Words": ["fujifilm6", "hassleblad6", "olympus6", "polaroid6"]},
+    {"Category": "Falsify", "Words": ["fabricate7", "fake7", "fix7", "forge7"]},
+    {"Category": "Nato_Alphabet", "Words": ["Tango8", "Alpha8", "Papa8", "Oscar8"]}
 ]
 
 
@@ -40,7 +40,7 @@ def fill_word_grid(grid, connections):
     
     row = 0 
     for connection in random_connections: #Randomise it
-        random.shuffle(connection["Words"])  # Shuffle words in each connection
+        random.shuffle(connection["Words"]) # Shuffle words in each connection
         col = 0
         for word in connection["Words"]: #within the lists, get each word.
             grid[row][col] = word #put the words into the grid reference
@@ -68,11 +68,44 @@ print_word_grid(word_grid)
 
 
 
+def get_user_guesses():
+    """Prompt the user for four guesses and return these as a list."""
+    print("Getting user guesses...")
+    return ["word1", "word2", "word3", "word4"]
+#guess = []
+#for i in range
+
+#def Play_Again():
+    #if Play_Again = True 
+    #else: 
+        #print("Hope youy enjoyed Pythonic Connect game please play agian in the future")
 
 
+def check_guesses(guesses, connections):
+    """Check if the user's guesses form a valid group."""
+    for category, word in zip(connections, guesses): #Zip = part of the whole word list of connnections
+        if word not in category['Words']: #If it's wrong
+            return False  #Lose a Life
+    return True # Keep on guessing connections
+    
+def main():
+    Lives_Remaining = 4 
 
+    ##while Lives_Remaining > 0:
+        #guesses = get_user_guesses 
+        #if check_guesses(guesses, connections): True
+        #print("Correct Connection") 
+    #else:
+            #Lives_Remaining - 1 
+            #print("You have int(Lives_Remaining)")
+    #else: print("Game Over you suck at Pythonic Connect"), print("Do you want to play again")
+    #if True 
+    #else:
+        #print("Hope you enjoyed my game Pythonic Connection, please play agina soon")
+         
 
-
-
+print("Welcome To Connctions")
+print("You have four guesses to match four words to a connection")
+print("Goodluck!")
 
 
