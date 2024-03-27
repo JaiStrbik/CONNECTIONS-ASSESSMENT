@@ -1,11 +1,9 @@
-
-
-
-
-
-#Connections
+# Jai Strbik
+# Connections Clone v1.0
 
 import random 
+
+# creates a grid
 def create_word_grid(): 
     '''
     Create a 4x4 grid with a word as a placeholder in each cell
@@ -29,8 +27,6 @@ connections =  [
     {"Category": "Falsify", "Words": ["fabricate7", "fake7", "fix7", "forge7"]},
     {"Category": "Nato_Alphabet", "Words": ["Tango8", "Alpha8", "Papa8", "Oscar8"]}
 ]
-
-
 
 def fill_word_grid(grid, connections):   
     '''
@@ -57,55 +53,39 @@ def print_word_grid(grid):
         for cell in row:
             print(cell.center(10), end=" | ") #Printing the sides
         print()
-        print("----" * 13 + "-")  # Horizontal line
+        print("----" * 13 + "-")  # Horizontal line\
 
+def get_guess():
+    guessed_words = []
+    for i in range(4):
+        word = input("Type a word")
+        guessed_words.append(word)
+    return guessed_words
 
+def check_guess(guessed_words, connections, lives):
+    match = False
+    for connection in connections:
+        if set(guessed_words) == set(connection["Words"]):
+            match = True
+    if match == True:
+        print("You got a category")
+        return True, lives
+    else:
+        print("You got it wrong!")
+        lives -=1 
+        return False, lives
 
-# Test the functions
-word_grid = create_word_grid()
-fill_word_grid(word_grid, connections)
-print_word_grid(word_grid)
-
-
-
-def get_user_guesses():
-    """Prompt the user for four guesses and return these as a list."""
-    print("Getting user guesses...")
-    return ["word1", "word2", "word3", "word4"]
-#guess = []
-#for i in range
-
-#def Play_Again():
-    #if Play_Again = True 
-    #else: 
-        #print("Hope youy enjoyed Pythonic Connect game please play agian in the future")
-
-
-def check_guesses(guesses, connections):
-    """Check if the user's guesses form a valid group."""
-    for category, word in zip(connections, guesses): #Zip = part of the whole word list of connnections
-        if word not in category['Words']: #If it's wrong
-            return False  #Lose a Life
-    return True # Keep on guessing connections
-    
-def main():
-    Lives_Remaining = 4 
-
-    ##while Lives_Remaining > 0:
-        #guesses = get_user_guesses 
-        #if check_guesses(guesses, connections): True
-        #print("Correct Connection") 
-    #else:
-            #Lives_Remaining - 1 
-            #print("You have int(Lives_Remaining)")
-    #else: print("Game Over you suck at Pythonic Connect"), print("Do you want to play again")
-    #if True 
-    #else:
-        #print("Hope you enjoyed my game Pythonic Connection, please play agina soon")
-         
-
+# mainline
 print("Welcome To Connctions")
 print("You have four guesses to match four words to a connection")
 print("Goodluck!")
 
+grid = create_word_grid()
+fill_word_grid(grid, connections)
+
+lives = 4
+while lives > 0:
+    print_word_grid(grid)
+    guessed_words = get_guess()
+    guess_correct, lives = check_guess(guessed_words,connections,lives)
 
