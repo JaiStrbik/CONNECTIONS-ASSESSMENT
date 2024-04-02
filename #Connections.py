@@ -30,20 +30,61 @@ connections = [
     {"Category": "Nato_Alphabet", "Words": ["Tango", "Alpha", "Papa", "Oscar"]}
 ]
 
+
+
+
 def fill_word_grid(grid, connections):   
     '''
     Fill the word grid with words from connections
     '''
     random_connections = random.sample(connections, 4) # Randomly select 4 connections
     
-    row = 0 
-    for connection in random_connections: #Randomise it
-        random.shuffle(connection["Words"]) # Shuffle words in each connection
-        col = 0
-        for word in connection["Words"]: #within the lists, get each word.
-            grid[row][col] = word #put the words into the grid reference
-            col += 1 #moves to next column
-        row += 1  #move into next row
+    # before you feed them into the grid, you need to make them into a long list, then put them into the grid
+
+    row_one = random_connections[0]["Words"]
+    row_two = random_connections[1]["Words"]
+    row_three = random_connections[2]["Words"]
+    row_four = random_connections[3]["Words"]
+    combined = row_one+row_two+row_three+row_four
+    random.shuffle(combined)
+    # print(combined)
+
+    grid = [[],
+            [],
+            [],
+            []]
+    
+    grid[0].append(combined[0])
+    grid[0].append(combined[1])
+    grid[0].append(combined[2])
+    grid[0].append(combined[3])
+    grid[1].append(combined[4])
+    grid[1].append(combined[5])
+    grid[1].append(combined[6])
+    grid[1].append(combined[7])
+    grid[2].append(combined[8])
+    grid[2].append(combined[9])
+    grid[2].append(combined[10])
+    grid[2].append(combined[11])
+    grid[3].append(combined[12])
+    grid[3].append(combined[13])
+    grid[3].append(combined[14])
+    grid[3].append(combined[15])
+
+    
+    
+
+    # row = 0 
+    # for connection in random_connections: #Randomise it
+    #     random.shuffle(connection["Words"]) # Shuffle words in each connection
+    #     col = 0
+    #     for word in connection["Words"]: #within the lists, get each word.
+    #         grid[row][col] = word #put the words into the grid reference
+    #         col += 1 #moves to next column
+    #     row += 1  #move into next row
+
+    return grid
+
 
 def print_word_grid(grid, guessed_words):
     '''
@@ -53,7 +94,7 @@ def print_word_grid(grid, guessed_words):
     for row in grid:
         print("|", end=" ")  #Printing the outline
         for cell in row:
-            if cell.lower() in guessed_words:
+            if cell in guessed_words:
                 print("\033[92m" + cell.center(10) + "\033[0m", end=" | ")  #Printing the sides in green for correctly guessed words
             else:
                 print(cell.center(10), end=" | ")  #Printing the sides
@@ -61,23 +102,32 @@ def print_word_grid(grid, guessed_words):
         print("----" * 13 + "-") # Horizontal lines
 
 def get_guess():
-    guessed_words = input("Guess 4 connected words from any category separated by commas: ").lower().split(',') #Guess 4 words each with commas inbetween
+    guessed_words = input("Guess 4 connected words from any category separated by commas: EG: fake,forge... ").split(',') #Guess 4 words each with commas inbetween
     return guessed_words
 
-def check_guess(guessed_words, connections, lives):
+def check_guess(guessed_words, connections, lives, guessed_count):
+    correct = False
+    print(guessed_words)
     for connection in connections: 
         if set(guessed_words) == set(connection["Words"]): #If your guess equals a connection
+            correct = True
             print(f"Good job! You guessed a category. The link for the category is: {connection['Category']}") #You are right
-            return True, lives 
-    print("WRONG, That's not a category!")
-    remaining_lives = lives - 1  #If you incorrectly guess a connection, lives - 1 
-    print(f"You have {remaining_lives} guesses remaining.") #Print Remaining lives
+            guessed_count += 1
+            print(f"You have guessed {guessed_count} categories out of 4")
+            return True, lives, guessed_count 
+            
+    if correct == False:
+    
+        print("Incorrect, That's not a category!")
+        lives = lives - 1  #If you incorrectly guess a connection, lives - 1      #LIVES ARE STUCK AT 3  
+        
+        print(f"You have {lives} guesses remaining.") #Print Remaining lives
     if lives == 0:
         print("You are out of guesses, YOU LOSE in Pythonic Connect - The correct connections were:")
         for connection in connections:
-            print(connection['Category'], connection['Words'])
+            print(connection['Category'], connection['Words'])   #ALL THE CONNECTIONS PRINT NOT WORDS IN THE GRID
 
-    return False, lives
+    return False, lives, guessed_count
 
 def typewriter_effect(text): #Adds an effect to printed text
     for character in text:
@@ -85,7 +135,7 @@ def typewriter_effect(text): #Adds an effect to printed text
         stdout.flush()
         sleep(0.02)
 
-# Main
+#Main
 typewriter_effect("\033[1;37m Welcome To Connections\033[0m") 
 print() # So grid doesn't interfere with typewriter
 typewriter_effect("\033[1;37m You have four guesses to match four words to a connection\033[0m") 
@@ -94,14 +144,23 @@ typewriter_effect("\033[1;37m Good luck!\033[0m")
 print() # So grid doesn't interfere with typewriter
 
 grid = create_word_grid()
-fill_word_grid(grid, connections)
+grid = fill_word_grid(grid, connections)
 
+
+
+
+guessed_count = 0
 lives = 4
 guessed_words = []
+won = False
 
-while lives > 0:
+while lives > 0 and won == False:
     print_word_grid(grid, guessed_words)
     guessed_words = get_guess()
-    guess_correct, lives = check_guess(guessed_words, connections, lives)
-
+    guess_correct, lives, guessed_count = check_guess(guessed_words, connections, lives, guessed_count)
+    if guessed_count == 4:
+        won = True
     #HOw do i make it so the grid stops looping
+
+if won == True:
+    print("You have won, congrats")
