@@ -113,7 +113,7 @@ def check_guess(guessed_words, connections, lives, guessed_count):
         
         print(f"You have {lives} guesses remaining.") #Print Remaining lives
     if lives == 0:
-        print("You are out of guesses, YOU LOSE in Pythonic Connect - The correct connections were:")
+        print("You are out of guesses, YOU LOSE in Pythonic Connect - The correct connections are:")
         for connection in connections:
             print(connection['Category'], connection['Words'])   #ALL THE CONNECTIONS PRINT NOT WORDS IN THE GRID
 
