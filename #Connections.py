@@ -71,17 +71,6 @@ def fill_word_grid(grid, connections):
     grid[3].append(combined[14])
     grid[3].append(combined[15])
 
-    
-    
-
-    # row = 0 
-    # for connection in random_connections: #Randomise it
-    #     random.shuffle(connection["Words"]) # Shuffle words in each connection
-    #     col = 0
-    #     for word in connection["Words"]: #within the lists, get each word.
-    #         grid[row][col] = word #put the words into the grid reference
-    #         col += 1 #moves to next column
-    #     row += 1  #move into next row
 
     return grid
 
@@ -114,12 +103,13 @@ def check_guess(guessed_words, connections, lives, guessed_count):
             print(f"Good job! You guessed a category. The link for the category is: {connection['Category']}") #You are right
             guessed_count += 1
             print(f"You have guessed {guessed_count} categories out of 4")
+            
             return True, lives, guessed_count 
             
     if correct == False:
     
         print("Incorrect, That's not a category!")
-        lives = lives - 1  #If you incorrectly guess a connection, lives - 1      #LIVES ARE STUCK AT 3  
+        lives = lives - 1  #If you incorrectly guess a connection, lives - 1      
         
         print(f"You have {lives} guesses remaining.") #Print Remaining lives
     if lives == 0:
@@ -160,7 +150,7 @@ while lives > 0 and won == False:
     guess_correct, lives, guessed_count = check_guess(guessed_words, connections, lives, guessed_count)
     if guessed_count == 4:
         won = True
-    #HOw do i make it so the grid stops looping
+    
 
 if won == True:
-    print("You have won, congrats")
+    print("CONGRATIONLATION!! YOU BEAT PYTHONIC CONNECT!!")
